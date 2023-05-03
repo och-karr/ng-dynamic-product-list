@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
+import {SingleProductComponent} from "../single-product/single-product.component";
 
 @Component({
   selector: 'app-product-form',
@@ -11,8 +12,6 @@ import {ProductService} from "../../services/product.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductFormComponent {
-  constructor(private _productService: ProductService, private _router: Router) {}
-
   public emptyValues = false;
 
   readonly form: FormGroup = new FormGroup({
@@ -20,6 +19,38 @@ export class ProductFormComponent {
     count: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern('^[0-9]+$')]),
     price: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')])
   });
+
+  public productForm: FormGroup | any;
+
+  get productsArray(): FormArray {
+    return this.productForm?.get('products') as FormArray;
+  }
+
+  constructor(private _productService: ProductService, private _router: Router) {}
+
+  ngOnInit(): void {
+    this.generateProductForm();
+  }
+
+  public generateProductForm (): void {
+    this.productForm = new FormGroup({
+      products: new FormArray([
+        SingleProductComponent.addSingleProduct()
+      ])
+    })
+  }
+
+  public addSingleProductForm(): void {
+    this.productsArray?.push(SingleProductComponent.addSingleProduct())
+  }
+
+  public deleteSingleProductForm(index: number): void {
+    this.productsArray?.removeAt(index);
+  }
+
+  public submitProductForm(): void {
+    console.log(this.productForm?.value)
+  }
 
   onFormSubmitted(form: FormGroup): void {
     this.emptyValues = form.get('name')?.value === '' && form.get('count')?.value === '' && form.get('price')?.value === '';

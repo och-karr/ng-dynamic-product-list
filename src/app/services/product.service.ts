@@ -10,4 +10,8 @@ export class ProductService {
   saveProduct(data: any): Observable<any> {
     return this._httpClient.post<any>('http://localhost:3000/products', data)
   }
+
+  getProduct(): Observable<any> {
+    return this._httpClient.get<any>('http://localhost:3000/products')
+  }
 }

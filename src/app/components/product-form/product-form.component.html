@@ -3,17 +3,21 @@
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onFormSubmitted(form)">
       <mat-form-field appearance="fill">
-        <mat-label>Input</mat-label>
-        <input matInput>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Input</mat-label>
-        <input matInput>
+        <mat-label>Count</mat-label>
+        <input matInput type="number" formControlName="count">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Input</mat-label>
-        <input matInput>
+        <mat-label>Price</mat-label>
+        <input matInput type="number" formControlName="price">
+        <mat-error *ngIf="form.get('price')!.invalid">Price is invalid</mat-error>
       </mat-form-field>
+      <div class="">
+        <button type="submit" mat-raised-button color="primary">Submit</button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

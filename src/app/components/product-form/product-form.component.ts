@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ProductService} from "../../services/product.service";
 
 @Component({
   selector: 'app-product-form',
@@ -8,9 +11,26 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductFormComponent {
-  form: any;
+  constructor(private _productService: ProductService, private _router: Router) {}
 
-  onFormSubmitted(form: any) {
-    
+  readonly form: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    count: new FormControl(''),
+    price: new FormControl('')
+  });
+
+  onFormSubmitted(form: FormGroup): void {
+    this._productService.saveProduct({
+      name: form.get('name')?.value,
+      count: form.get('count')?.value,
+      price: form.get('price')?.value
+    })
+      .subscribe({
+        next: () => {
+          this._router.navigate(['/'])
+        },
+        error: () => {
+        }
+      })
   }
 }

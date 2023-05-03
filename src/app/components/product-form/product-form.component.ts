@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 
@@ -13,24 +13,30 @@ import {ProductService} from "../../services/product.service";
 export class ProductFormComponent {
   constructor(private _productService: ProductService, private _router: Router) {}
 
+  public emptyValues = false;
+
   readonly form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    count: new FormControl(''),
-    price: new FormControl('')
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+    count: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern('^[0-9]+$')]),
+    price: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')])
   });
 
   onFormSubmitted(form: FormGroup): void {
-    this._productService.saveProduct({
-      name: form.get('name')?.value,
-      count: form.get('count')?.value,
-      price: form.get('price')?.value
-    })
-      .subscribe({
-        next: () => {
-          this._router.navigate(['/'])
-        },
-        error: () => {
-        }
+    this.emptyValues = form.get('name')?.value === '' && form.get('count')?.value === '' && form.get('price')?.value === '';
+
+    if (!this.emptyValues && form.valid) {
+      this._productService.saveProduct({
+        name: form.get('name')?.value,
+        count: form.get('count')?.value,
+        price: form.get('price')?.value
       })
+        .subscribe({
+          next: () => {
+            this._router.navigate(['/products'])
+          },
+          error: () => {
+          }
+        })
+    }
   }
 }

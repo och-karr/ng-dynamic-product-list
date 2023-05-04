@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SingleProductComponent } from './single-product.component';
+import { SingleProductFormComponent } from './single-product-form.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -14,9 +14,9 @@ import {CommonModule} from "@angular/common";
     MatButtonModule,
     CommonModule
   ],
-  declarations: [SingleProductComponent],
+  declarations: [SingleProductFormComponent],
   providers: [],
-  exports: [SingleProductComponent]
+  exports: [SingleProductFormComponent]
 })
-export class SingleProductComponentModule {
+export class SingleProductFormComponentModule {
 }

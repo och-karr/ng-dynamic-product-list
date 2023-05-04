@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 import {FormArray, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
-import {SingleProductComponent} from "../single-product/single-product.component";
+import {SingleProductFormComponent} from "../single-product-form/single-product-form.component";
 
 @Component({
   selector: 'app-products-form',
@@ -30,13 +30,13 @@ export class ProductsFormComponent {
   public generateProductsForm (): void {
     this.productsForm = new FormGroup({
       singleProductForms: new FormArray([
-        SingleProductComponent.addSingleProduct()
+        SingleProductFormComponent.addSingleProduct()
       ])
     })
   }
 
   public addSingleProductForm(): void {
-    this.productsArray?.push(SingleProductComponent.addSingleProduct())
+    this.productsArray?.push(SingleProductFormComponent.addSingleProduct())
   }
 
   public deleteSingleProductForm(index: number): void {
@@ -44,7 +44,7 @@ export class ProductsFormComponent {
   }
 
   public submitProductsForm(): void {
-    console.log(this.productsForm?.value.products)
-    this._productService.saveProduct(this.productsForm!.value.products).subscribe()
+    console.log(this.productsForm?.value.singleProductForms)
+    this._productService.saveProduct(this.productsForm!.value.singleProductForms).subscribe()
   }
 }

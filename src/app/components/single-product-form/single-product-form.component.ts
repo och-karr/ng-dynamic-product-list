@@ -2,13 +2,13 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEnc
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-single-product',
-  styleUrls: ['./single-product.component.scss'],
-  templateUrl: './single-product.component.html',
+  selector: 'app-single-product-form',
+  styleUrls: ['./single-product-form.component.scss'],
+  templateUrl: './single-product-form.component.html',
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SingleProductComponent {
+export class SingleProductFormComponent {
 
   @Input()
   public childForm: FormGroup | any;

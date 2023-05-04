@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 
 @Injectable()
 export class ProductService {
@@ -8,7 +8,11 @@ export class ProductService {
   }
 
   saveProduct(data: any): Observable<any> {
-    return this._httpClient.post<any>('http://localhost:3000/products', data)
+    const observables: Observable<any>[] = [];
+    data.forEach((item: any) => {
+      observables.push(this._httpClient.post<any>('http://localhost:3000/products', item));
+    });
+    return forkJoin(observables);
   }
 
   getProduct(): Observable<any> {

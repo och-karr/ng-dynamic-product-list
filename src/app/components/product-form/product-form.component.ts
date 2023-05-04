@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {SingleProductComponent} from "../single-product/single-product.component";
@@ -14,11 +14,11 @@ import {SingleProductComponent} from "../single-product/single-product.component
 export class ProductFormComponent {
   public emptyValues = false;
 
-  readonly form: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-    count: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern('^[0-9]+$')]),
-    price: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')])
-  });
+  // readonly form: FormGroup = new FormGroup({
+  //   name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+  //   count: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern('^[0-9]+$')]),
+  //   price: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')])
+  // });
 
   public productForm: FormGroup | any;
 
@@ -49,25 +49,27 @@ export class ProductFormComponent {
   }
 
   public submitProductForm(): void {
-    console.log(this.productForm?.value)
+    // console.log(this.productForm?.value.products)
+    console.log(this.productForm?.value.products)
+    this._productService.saveProduct(this.productForm!.value.products).subscribe()
   }
 
-  onFormSubmitted(form: FormGroup): void {
-    this.emptyValues = form.get('name')?.value === '' && form.get('count')?.value === '' && form.get('price')?.value === '';
-
-    if (!this.emptyValues && form.valid) {
-      this._productService.saveProduct({
-        name: form.get('name')?.value,
-        count: form.get('count')?.value,
-        price: form.get('price')?.value
-      })
-        .subscribe({
-          next: () => {
-            this._router.navigate(['/products'])
-          },
-          error: () => {
-          }
-        })
-    }
-  }
+  // onFormSubmitted(form: FormGroup): void {
+  //   this.emptyValues = form.get('name')?.value === '' && form.get('count')?.value === '' && form.get('price')?.value === '';
+  //
+  //   if (!this.emptyValues && form.valid) {
+  //     this._productService.saveProduct({
+  //       name: form.get('name')?.value,
+  //       count: form.get('count')?.value,
+  //       price: form.get('price')?.value
+  //     })
+  //       .subscribe({
+  //         next: () => {
+  //           this._router.navigate(['/products'])
+  //         },
+  //         error: () => {
+  //         }
+  //       })
+  //   }
+  // }
 }

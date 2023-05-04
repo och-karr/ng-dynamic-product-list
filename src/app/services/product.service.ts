@@ -14,7 +14,7 @@ export class ProductService {
 
   saveProducts(data: ProductModel[]): Observable<void[]> {
     const observables: Observable<void>[] = [];
-    data.forEach((item: any) => {
+    data.forEach((item: ProductModel) => {
       observables.push(this.saveProduct(item));
     });
     return forkJoin(observables);

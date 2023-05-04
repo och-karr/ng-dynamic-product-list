@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 
 export class ProductsFormComponent {
-  public productsForm: FormGroup | null = null;
+  public productsForm: FormGroup | any;
 
   private _isFormValidSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public isFormValid$: Observable<boolean> = this._isFormValidSubject.asObservable();

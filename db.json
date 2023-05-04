@@ -1,10 +1,16 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "abc",
-      "count": 1,
-      "price": 100
+      "name": "Chrupki",
+      "count": 4,
+      "price": 4,
+      "id": 8
+    },
+    {
+      "name": "Pizza",
+      "count": 2,
+      "price": 22,
+      "id": 9
     }
   ],
   "companyData": [

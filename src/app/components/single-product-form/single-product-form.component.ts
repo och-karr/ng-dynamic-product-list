@@ -11,13 +11,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class SingleProductFormComponent {
 
   @Input()
-  public childForm: FormGroup | null = null;
+  public childForm: FormGroup | any;
 
   @Input()
   public arrayIndex: number = 0;
 
   @Input()
-  public isFormValid: boolean | null = null;
+  public isFormValid: boolean | null = false;
 
   @Output()
   public deleteProductFormEvent: EventEmitter<number> = new EventEmitter<number>();

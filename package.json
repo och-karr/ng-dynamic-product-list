@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "serve": "ng serve",
+    "server": "json-server --watch db.json",
+    "start": "concurrently \"npm run serve\" \"npm run server\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -23,7 +24,8 @@
     "@angular/router": "^14.2.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "concurrently": "^8.0.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.3",

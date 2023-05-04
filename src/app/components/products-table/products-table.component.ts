@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
+import {CompanyService} from "../../services/company.service";
 
 @Component({
   selector: 'app-products-table',
@@ -11,7 +12,9 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsTableComponent {
-  constructor(private _productService: ProductService, private _router: Router) { }
+  constructor(private _productService: ProductService, private _companyService: CompanyService, private _router: Router) { }
 
-  readonly products$: Observable<any> = this._productService.getProduct();
+  readonly products$: Observable<any> = this._productService.getProducts();
+  readonly companyData$: Observable<any> = this._companyService.getCompanyData();
+
 }

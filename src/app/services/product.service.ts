@@ -15,7 +15,7 @@ export class ProductService {
     return forkJoin(observables);
   }
 
-  getProduct(): Observable<any> {
+  getProducts(): Observable<any> {
     return this._httpClient.get<any>('http://localhost:3000/products')
   }
 }

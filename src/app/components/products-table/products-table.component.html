@@ -1,3 +1,12 @@
+<mat-card *ngIf="companyData$ | async as companyData">
+  <mat-card-title>{{ companyData[0].name }}</mat-card-title>
+  <mat-card-content>
+    <p>{{ companyData[0].address }}</p>
+    <span *ngFor="let item of companyData[0].phones; last as last;">
+      {{ item }}<span *ngIf="!last">, </span>
+    </span>
+  </mat-card-content>
+</mat-card>
 <ng-container *ngIf="products$ | async as products">
   <ng-container *ngIf="products.length > 0; else elseState">
     <table mat-table [dataSource]="products" class="mat-elevation-z8">
@@ -8,7 +17,7 @@
         <td mat-cell>
           <input type="text">
         </td>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element; index as i;"> {{ i }} </td>
       </ng-container>
 
       <!-- Item Column -->
@@ -29,16 +38,8 @@
         <td mat-cell *matCellDef="let element"> {{element.price}} </td>
       </ng-container>
 
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef>  </th>
-        <td mat-cell *matCellDef="let element">
-          <!--        <button mat-raised-button color="warn" (click)="deleteRecord(element.id)">Delete</button>-->
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="['num', 'item', 'count', 'price', 'delete']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['num', 'item', 'count', 'price', 'delete']"></tr>
+      <tr mat-header-row *matHeaderRowDef="['num', 'item', 'count', 'price']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['num', 'item', 'count', 'price']"></tr>
     </table>
   </ng-container>
   <ng-template #elseState>

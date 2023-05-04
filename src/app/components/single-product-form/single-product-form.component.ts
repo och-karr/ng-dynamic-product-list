@@ -17,7 +17,7 @@ export class SingleProductFormComponent {
   public arrayIndex: number | any;
 
   @Input()
-  public totalProducts: number | any;
+  public isFormValid: boolean | any;
 
   @Output()
   public deleteProductFormEvent: EventEmitter<number> = new EventEmitter<number>();

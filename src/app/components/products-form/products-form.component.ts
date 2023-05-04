@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {FormArray, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
-import {ProductService} from "../../services/product.service";
-import {SingleProductFormComponent} from "../single-product-form/single-product-form.component";
+import { FormArray, FormGroup } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ProductService } from '../../services/product.service';
+import { SingleProductFormComponent } from '../single-product-form/single-product-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-form',
@@ -13,21 +14,20 @@ import {SingleProductFormComponent} from "../single-product-form/single-product-
 })
 
 export class ProductsFormComponent {
-  public emptyValues = false;
-
   public productsForm: FormGroup | any;
+
+  private _isFormValidSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isFormValid$: Observable<boolean> = this._isFormValidSubject.asObservable();
+
+  constructor(private _productService: ProductService, private _router: Router) {
+    this.generateProductsForm();
+  }
 
   get productsArray(): FormArray {
     return this.productsForm?.get('singleProductForms') as FormArray;
   }
 
-  constructor(private _productService: ProductService, private _router: Router) {}
-
-  ngOnInit(): void {
-    this.generateProductsForm();
-  }
-
-  public generateProductsForm (): void {
+  public generateProductsForm(): void {
     this.productsForm = new FormGroup({
       singleProductForms: new FormArray([
         SingleProductFormComponent.addSingleProduct()
@@ -43,8 +43,20 @@ export class ProductsFormComponent {
     this.productsArray?.removeAt(index);
   }
 
-  public submitProductsForm(): void {
-    console.log(this.productsForm?.value.singleProductForms)
-    this._productService.saveProduct(this.productsForm!.value.singleProductForms).subscribe()
+  public submitProductsForm(form: FormGroup): void {
+    this._isFormValidSubject.next(false);
+
+    if (form.valid) {
+      this._isFormValidSubject.next(true);
+      this._productService.saveProduct(form.value.singleProductForms)
+        .subscribe({
+          next: () => {
+            this._router.navigate(['/products'])
+          },
+          error: () => {}
+        })
+    } else {
+      this._isFormValidSubject.next(false);
+    }
   }
 }

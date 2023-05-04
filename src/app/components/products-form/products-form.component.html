@@ -1,20 +1,23 @@
 <mat-card>
-  <mat-card-title>Add product</mat-card-title>
+  <mat-card-title>Add products</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="productsForm" (ngSubmit)="submitProductsForm()">
+    <form [formGroup]="productsForm" (ngSubmit)="submitProductsForm(productsForm)">
       <div class="" *ngFor="let childForm of productsArray.controls; let i = index">
         <app-single-product-form
           [childForm]="childForm"
           [arrayIndex]="i"
-          [totalProducts]="productsArray.length"
+          [isFormValid]="isFormValid$ | async"
           (deleteProductFormEvent)="deleteSingleProductForm($event)"
         >
         </app-single-product-form>
       </div>
-      <!--        [disabled]="!productArray.valid"-->
-      <button type="button" mat-raised-button color="warn" (click)="addSingleProductForm()">Add product form</button>
-      <div class="">
-        <!--        [disabled]="!productForm.valid"-->
+      <div class="no-items-info-container" *ngIf="productsArray.length === 0">
+        <p class="no-items-info">Please add items</p>
+      </div>
+      <div class="button-container">
+        <button type="button" mat-raised-button color="accent" (click)="addSingleProductForm()">Add item</button>
+      </div>
+      <div class="button-container">
         <button type="submit" mat-raised-button color="primary">Submit</button>
       </div>
     </form>

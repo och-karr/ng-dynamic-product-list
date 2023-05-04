@@ -9,7 +9,7 @@
         <mat-error *ngIf="nameField?.hasError('minlength')">Name must have at least 3 chars</mat-error>
         <mat-error *ngIf="nameField?.hasError('maxlength')">Name must have a maximum of 30 chars</mat-error>
       </mat-form-field>
-      <p class="submit-error" *ngIf="!isFormValid && !nameField.dirty && !nameField.touched">Name is required</p>
+      <p class="submit-error" *ngIf="!isFormValid && !nameField?.dirty && !nameField?.touched">Name is required</p>
     </div>
     <div class="form-field-container">
       <mat-form-field appearance="fill">
@@ -20,7 +20,7 @@
         <mat-error *ngIf="countField?.hasError('max')">Quantity must be max 100</mat-error>
         <mat-error *ngIf="countField?.hasError('pattern')">Quantity must be a positive integer</mat-error>
       </mat-form-field>
-      <p class="submit-error" *ngIf="!isFormValid && !countField.dirty && !countField.touched">Quantity is required</p>
+      <p class="submit-error" *ngIf="!isFormValid && !countField?.dirty && !countField?.touched">Quantity is required</p>
     </div>
     <div class="form-field-container">
       <mat-form-field appearance="fill">
@@ -31,7 +31,7 @@
         <mat-error *ngIf="priceField?.hasError('max')">Price must be max 1000000</mat-error>
         <mat-error *ngIf="priceField?.hasError('pattern')">Price must be a positive integer</mat-error>
       </mat-form-field>
-      <p class="submit-error" *ngIf="!isFormValid && !priceField.dirty && !priceField.touched">Price is required</p>
+      <p class="submit-error" *ngIf="!isFormValid && !priceField?.dirty && !priceField?.touched">Price is required</p>
     </div>
     <div class="button-container">
       <button mat-raised-button color="warn" (click)="deleteProductForm(arrayIndex)">Delete</button>

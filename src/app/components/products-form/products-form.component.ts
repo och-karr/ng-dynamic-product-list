@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 
 export class ProductsFormComponent {
-  public productsForm: FormGroup | any;
+  public productsForm: FormGroup | null = null;
 
   private _isFormValidSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public isFormValid$: Observable<boolean> = this._isFormValidSubject.asObservable();
@@ -48,7 +48,7 @@ export class ProductsFormComponent {
 
     if (form.valid) {
       this._isFormValidSubject.next(true);
-      this._productService.saveProduct(form.value.singleProductForms)
+      this._productService.saveProducts(form.value.singleProductForms)
         .subscribe({
           next: () => {
             this._router.navigate(['/products'])
